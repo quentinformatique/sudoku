@@ -1,0 +1,157 @@
+{
+  "common": {
+    "appName": "Sudoku Noir",
+    "continue": "Continuer",
+    "start": "Démarrer",
+    "resume": "Reprendre",
+    "cancel": "Annuler",
+    "done": "Terminé",
+    "close": "Fermer",
+    "apply": "Appliquer",
+    "all": "Tous",
+    "minutes": "minutes",
+    "seconds": "secondes",
+    "enabled": "Activé",
+    "disabled": "Désactivé"
+  },
+  "tabs": {
+    "home": "Accueil",
+    "play": "Jouer",
+    "stats": "Stats",
+    "settings": "Réglages"
+  },
+  "home": {
+    "title": "Accueil",
+    "subtitle": "Un espace calme pour jouer avec focus.",
+    "activeTitle": "Partie active",
+    "activeEmpty": "Aucune partie active.",
+    "resume": "Reprendre",
+    "startNew": "Nouvelle partie",
+    "quickStats": "Aperçu rapide",
+    "completed": "Terminées",
+    "total": "Total",
+    "recentHistory": "Historique récent"
+  },
+  "play": {
+    "newGame": "Nouvelle partie",
+    "continue": "Continuer",
+    "difficulty": "Difficulté",
+    "start": "Démarrer",
+    "resume": "Reprendre",
+    "clues": "{{min}}-{{max}} indices",
+    "noActive": "Aucune partie active à reprendre.",
+    "newHint": "Choisissez une difficulté et commencez.",
+    "continueHint": "Reprenez exactement où vous vous êtes arrêté."
+  },
+  "game": {
+    "title": "Partie",
+    "timer": "Chrono",
+    "mistakes": "Erreurs",
+    "notes": "Notes",
+    "pen": "Stylo",
+    "pencil": "Crayon",
+    "erase": "Effacer",
+    "undo": "Annuler",
+    "redo": "Rétablir",
+    "reset": "Réinitialiser",
+    "newPuzzle": "Nouvelle grille",
+    "pause": "En pause",
+    "complete": "Grille terminée",
+    "incorrectSummary": "{{count}} cases incorrectes",
+    "freeModeWarning": "Grille remplie. Vérifiez vos entrées.",
+    "instantErrors": "Retour immédiat",
+    "freeErrors": "Mode libre",
+    "resumePrompt": "Reprendre"
+  },
+  "stats": {
+    "title": "Statistiques",
+    "overall": "Global",
+    "byDifficulty": "Par difficulté",
+    "completed": "Terminées",
+    "bestTime": "Meilleur temps",
+    "averageTime": "Temps moyen",
+    "totalGames": "Parties"
+  },
+  "history": {
+    "title": "Historique",
+    "filterDifficulty": "Difficulté",
+    "filterStatus": "Statut",
+    "empty": "Pas encore de partie."
+  },
+  "settings": {
+    "title": "Réglages",
+    "appearance": "Apparence",
+    "theme": "Thème",
+    "accent": "Accent",
+    "customAccent": "Accent personnalisé",
+    "language": "Langue",
+    "sound": "Effets sonores",
+    "haptics": "Haptique",
+    "accessibility": "Accessibilité",
+    "highContrast": "Contraste élevé",
+    "reduceMotion": "Réduire les animations",
+    "largeNumbers": "Chiffres plus grands",
+    "gameplay": "Gameplay",
+    "errorFeedback": "Retour d'erreur",
+    "instantFeedback": "Retour immédiat",
+    "freeMode": "Mode libre",
+    "data": "Données",
+    "clearHistory": "Effacer l'historique",
+    "invalidHex": "Couleur hex invalide",
+    "historyCleared": "Historique effacé",
+    "about": "À propos",
+    "help": "Aide & FAQ",
+    "learning": "Apprentissage",
+    "privacy": "Politique de confidentialité",
+    "terms": "Conditions d'utilisation",
+    "licenses": "Licences open source"
+  },
+  "about": {
+    "title": "À propos",
+    "body": "Sudoku Noir est une expérience Sudoku minimaliste et hors ligne, pensée pour la concentration.",
+    "version": "Version"
+  },
+  "help": {
+    "title": "Aide & FAQ",
+    "q1": "Comment fonctionnent les notes ?",
+    "a1": "Passez en mode Crayon pour noter des candidats dans une case.",
+    "q2": "Qu'est-ce que le retour immédiat ?",
+    "a2": "Les entrées incorrectes sont discrètement signalées pendant la partie.",
+    "q3": "Le chrono se met-il en pause ?",
+    "a3": "Oui, le chrono se met en pause quand l'app est en arrière-plan."
+  },
+  "learning": {
+    "title": "Apprentissage",
+    "subtitle": "Bientôt",
+    "body": "Nous préparons des leçons guidées, des exercices et des sessions quotidiennes."
+  },
+  "privacy": {
+    "title": "Politique de confidentialité",
+    "body": "Sudoku Noir conserve vos données localement sur l'appareil. Pas de pub, pas de traqueurs, pas de compte."
+  },
+  "terms": {
+    "title": "Conditions d'utilisation",
+    "body": "Utilisez l'application de façon responsable. Le logiciel est fourni en l'état, sans garantie."
+  },
+  "licenses": {
+    "title": "Licences open source",
+    "body": "Cette app utilise Expo, React Native, React Navigation, Zustand, i18next et d'autres bibliothèques open source."
+  },
+  "difficulty": {
+    "beginner": "Débutant",
+    "intermediate": "Intermédiaire",
+    "hard": "Difficile",
+    "expert": "Expert"
+  },
+  "status": {
+    "active": "Active",
+    "completed": "Terminée",
+    "abandoned": "Abandonnée"
+  },
+  "themes": {
+    "system": "Système",
+    "light": "Clair",
+    "dark": "Sombre"
+  }
+}
+

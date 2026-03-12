@@ -7,7 +7,7 @@ import { AppText } from '../../../components/ui/AppText';
 export const AboutScreen = () => {
   const { t } = useTranslation();
   return (
-    <Screen scroll>
+    <Screen>
       <AppText variant="title">{t('about.title')}</AppText>
       <AppText style={styles.body}>{t('about.body')}</AppText>
       <View style={styles.block}>

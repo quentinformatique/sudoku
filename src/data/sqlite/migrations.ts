@@ -40,6 +40,12 @@ const migrations: Migration[] = [
       );
     },
   },
+  {
+    version: 2,
+    up: async () => {
+      await execAsync('ALTER TABLE games ADD COLUMN hints_remaining INTEGER NOT NULL DEFAULT 3;');
+    },
+  },
 ];
 
 export const migrate = async () => {

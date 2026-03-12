@@ -8,7 +8,7 @@ import { Card } from '../../../components/ui/Card';
 export const PrivacyScreen = () => {
   const { t } = useTranslation();
   return (
-    <Screen scroll>
+    <Screen>
       <AppText variant="title">{t('privacy.title')}</AppText>
       <Card style={styles.card}>
         <AppText>{t('privacy.body')}</AppText>

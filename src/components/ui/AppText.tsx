@@ -1,6 +1,6 @@
 import { Text, TextProps, StyleSheet } from 'react-native';
 
-import { useAppTheme } from '../../app/providers/ThemeProvider';
+import { useAppTheme } from '../../core/providers/ThemeProvider';
 
 type Variant = 'body' | 'title' | 'subtitle' | 'label' | 'mono';
 

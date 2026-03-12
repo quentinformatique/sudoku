@@ -1,13 +1,13 @@
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Pressable } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { useAppTheme } from '../../../app/providers/ThemeProvider';
+import { useAppTheme } from '../../../core/providers/ThemeProvider';
 import { Screen } from '../../../components/layout/Screen';
 import { AppText } from '../../../components/ui/AppText';
 import { Button } from '../../../components/ui/Button';
-import { Card } from '../../../components/ui/Card';
 import { difficultyConfig, Difficulty } from '../engine/difficulty';
 import { useGameStore } from '../gameStore';
 
@@ -17,6 +17,8 @@ export const NewGameScreen = () => {
   const theme = useAppTheme();
   const [selected, setSelected] = useState<Difficulty>('beginner');
   const startNewGame = useGameStore((state) => state.startNewGame);
+  const record = useGameStore((state) => state.record);
+  const hasActive = record?.status === 'active';
 
   const handleStart = async () => {
     await startNewGame(selected);
@@ -24,48 +26,58 @@ export const NewGameScreen = () => {
   };
 
   return (
-    <Screen scroll>
-      <AppText variant="title">{t('play.newGame')}</AppText>
-      <AppText>{t('play.newHint')}</AppText>
-
+    <Screen 
+      title={t('play.newGame')} 
+      subtitle={t('play.newHint')}
+      scroll
+    >
       <View style={styles.list}>
         {Object.entries(difficultyConfig).map(([key, config]) => {
           const value = key as Difficulty;
           const isActive = value === selected;
           return (
-            <Card
+            <Pressable
               key={value}
+              onPress={() => setSelected(value)}
               style={[
-                styles.card,
+                styles.difficultyCard,
                 {
-                  borderWidth: isActive ? 2 : 1,
+                  backgroundColor: theme.colors.card,
                   borderColor: isActive ? theme.colors.accent : theme.colors.border,
+                  borderWidth: isActive ? 1.5 : 1,
                 },
               ]}
             >
-              <AppText variant="subtitle">{t(`difficulty.${value}`)}</AppText>
-              <AppText>
-                {t('play.clues', { min: config.minClues, max: config.maxClues })}
-              </AppText>
-              <Button
-                label={isActive ? t('common.done') : t('common.apply')}
-                onPress={() => {
-                  setSelected(value);
-                }}
-                variant={isActive ? 'primary' : 'secondary'}
-                style={styles.button}
-              />
-            </Card>
+              <View style={styles.difficultyInfo}>
+                <AppText variant="subtitle" style={isActive && { color: theme.colors.accent }}>
+                  {t(`difficulty.${value}`)}
+                </AppText>
+                <AppText style={{ color: theme.colors.muted, fontSize: 13, marginTop: 2 }}>
+                  {t('play.clues', { min: config.minClues, max: config.maxClues })}
+                </AppText>
+              </View>
+              {isActive && (
+                <MaterialCommunityIcons name="check-circle" size={24} color={theme.colors.accent} />
+              )}
+            </Pressable>
           );
         })}
       </View>
+
       <View style={styles.actions}>
-        <Button label={t('play.start')} onPress={handleStart} />
-        <Button
-          label={t('play.continue')}
-          onPress={() => navigation.navigate('Continue')}
-          variant="secondary"
+        <Button 
+          label={t('play.start')} 
+          onPress={handleStart} 
+          style={styles.mainButton}
         />
+        
+        {hasActive && (
+          <Button
+            label={t('play.continue')}
+            onPress={() => navigation.navigate('Continue')}
+            variant="secondary"
+          />
+        )}
       </View>
     </Screen>
   );
@@ -73,17 +85,24 @@ export const NewGameScreen = () => {
 
 const styles = StyleSheet.create({
   list: {
-    marginTop: 16,
     gap: 12,
   },
-  card: {
-    gap: 8,
+  difficultyCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 16,
+    borderRadius: 16,
+    borderWidth: 1,
   },
-  button: {
-    alignSelf: 'flex-start',
+  difficultyInfo: {
+    flex: 1,
   },
   actions: {
-    marginTop: 16,
+    marginTop: 32,
     gap: 12,
+  },
+  mainButton: {
+    height: 56,
   },
 });

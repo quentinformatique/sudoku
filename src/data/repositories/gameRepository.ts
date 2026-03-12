@@ -4,7 +4,7 @@ import { GameRecord, PersistedGameState } from '../../features/game/types';
 import { getAllAsync, getFirstAsync, runAsync } from '../sqlite/client';
 
 export type GameFilters = {
-  status?: 'active' | 'completed' | 'abandoned';
+  status?: 'active' | 'completed' | 'abandoned' | 'lost';
   difficulty?: Difficulty | 'all';
   limit?: number;
 };
@@ -29,12 +29,13 @@ const toRecord = (row: any): GameRecord => ({
   durationSec: Number(row.duration_sec ?? 0),
   mistakes: Number(row.mistakes ?? 0),
   moves: Number(row.moves ?? 0),
+  hintsRemaining: Number(row.hints_remaining ?? 3),
 });
 
 export const saveGame = async (record: GameRecord, state: PersistedGameState) => {
   await runAsync(
-    `INSERT INTO games (id, difficulty, puzzle, solution, status, started_at, updated_at, completed_at, duration_sec, mistakes, moves)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `INSERT INTO games (id, difficulty, puzzle, solution, status, started_at, updated_at, completed_at, duration_sec, mistakes, moves, hints_remaining)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
      ON CONFLICT(id) DO UPDATE SET
        difficulty = excluded.difficulty,
        puzzle = excluded.puzzle,
@@ -45,7 +46,8 @@ export const saveGame = async (record: GameRecord, state: PersistedGameState) =>
        completed_at = excluded.completed_at,
        duration_sec = excluded.duration_sec,
        mistakes = excluded.mistakes,
-       moves = excluded.moves`,
+       moves = excluded.moves,
+       hints_remaining = excluded.hints_remaining`,
     [
       record.id,
       record.difficulty,
@@ -58,6 +60,7 @@ export const saveGame = async (record: GameRecord, state: PersistedGameState) =>
       record.durationSec,
       record.mistakes,
       record.moves,
+      record.hintsRemaining,
     ],
   );
 

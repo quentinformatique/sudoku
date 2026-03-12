@@ -8,7 +8,7 @@ import { Card } from '../../../components/ui/Card';
 export const TermsScreen = () => {
   const { t } = useTranslation();
   return (
-    <Screen scroll>
+    <Screen>
       <AppText variant="title">{t('terms.title')}</AppText>
       <Card style={styles.card}>
         <AppText>{t('terms.body')}</AppText>

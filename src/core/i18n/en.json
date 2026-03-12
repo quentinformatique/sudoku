@@ -1,0 +1,169 @@
+{
+  "common": {
+    "appName": "Sudoku Noir",
+    "continue": "Continue",
+    "start": "Start",
+    "resume": "Resume",
+    "cancel": "Cancel",
+    "done": "Done",
+    "close": "Close",
+    "apply": "Apply",
+    "select": "Select",
+    "all": "All",
+    "minutes": "minutes",
+    "seconds": "seconds",
+    "enabled": "Enabled",
+    "disabled": "Disabled"
+  },
+  "tabs": {
+    "home": "Home",
+    "play": "Play",
+    "stats": "Stats",
+    "settings": "Settings"
+  },
+  "home": {
+    "title": "Home",
+    "subtitle": "A calm place for focused play.",
+    "activeTitle": "Active Game",
+    "activeEmpty": "No active game yet.",
+    "resume": "Resume game",
+    "startNew": "Start new game",
+    "quickStats": "Quick stats",
+    "completed": "Completed",
+    "total": "Total",
+    "recentHistory": "Recent history"
+  },
+  "play": {
+    "newGame": "New Game",
+    "continue": "Continue",
+    "difficulty": "Difficulty",
+    "start": "Start game",
+    "resume": "Resume",
+    "clues": "{{min}}-{{max}} clues",
+    "noActive": "There is no active game to continue.",
+    "newHint": "Choose a difficulty and begin.",
+    "continueHint": "Pick up exactly where you left off."
+  },
+  "game": {
+    "title": "Game",
+    "timer": "Timer",
+    "mistakes": "Mistakes",
+    "moves": "Moves",
+    "notes": "Notes",
+    "pen": "Pen",
+    "pencil": "Pencil",
+    "erase": "Erase",
+    "undo": "Undo",
+    "redo": "Redo",
+    "hint": "Hint",
+    "autoPencil": "Auto-pencil",
+    "reset": "Reset puzzle",
+    "abandon": "Abandon game",
+    "pause": "Paused",
+    "complete": "Puzzle complete",
+    "lost": "Game lost",
+    "winTitle": "Puzzle solved",
+    "lossTitle": "Game over",
+    "recap": "Game recap",
+    "backHome": "Back to home",
+    "newGame": "New game",
+    "retry": "Retry puzzle",
+    "incorrectSummary": "{{count}} cells are incorrect",
+    "freeModeWarning": "Puzzle filled. Review your entries.",
+    "instantErrors": "Instant feedback",
+    "freeErrors": "Free mode",
+    "resumePrompt": "Resume"
+  },
+  "stats": {
+    "title": "Statistics",
+    "overall": "Overall",
+    "byDifficulty": "By difficulty",
+    "completed": "Completed",
+    "bestTime": "Best time",
+    "averageTime": "Average time",
+    "totalGames": "Total games"
+  },
+  "history": {
+    "title": "History",
+    "filterDifficulty": "Difficulty",
+    "filterStatus": "Status",
+    "empty": "No games yet."
+  },
+  "settings": {
+    "title": "Settings",
+    "appearance": "Appearance",
+    "theme": "Theme",
+    "accent": "Accent",
+    "customAccent": "Custom accent",
+    "language": "Language",
+    "sound": "Sound effects",
+    "haptics": "Haptics",
+    "accessibility": "Accessibility",
+    "highContrast": "High contrast",
+    "reduceMotion": "Reduce motion",
+    "largeNumbers": "Larger numbers",
+    "gameplay": "Gameplay",
+    "errorFeedback": "Error feedback",
+    "instantFeedback": "Instant feedback",
+    "freeMode": "Free mode",
+    "data": "Data",
+    "clearHistory": "Clear history",
+    "invalidHex": "Invalid hex color",
+    "historyCleared": "History cleared",
+    "about": "About",
+    "help": "Help & FAQ",
+    "learning": "Learning",
+    "privacy": "Privacy Policy",
+    "terms": "Terms & Conditions",
+    "licenses": "Open Source Licenses"
+  },
+  "about": {
+    "title": "About",
+    "body": "Sudoku Noir is a minimal, offline-first Sudoku experience built for focus.",
+    "version": "Version"
+  },
+  "help": {
+    "title": "Help & FAQ",
+    "q1": "How do notes work?",
+    "a1": "Switch to Pencil mode to jot candidates inside a cell.",
+    "q2": "What is instant feedback?",
+    "a2": "Incorrect entries are gently highlighted while you play.",
+    "q3": "Does the timer pause?",
+    "a3": "Yes, the timer pauses when the app is in the background."
+  },
+  "learning": {
+    "title": "Learning",
+    "subtitle": "Coming soon",
+    "body": "We are crafting guided lessons, pattern drills, and daily practice packs."
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "body": "Sudoku Noir stores your game data locally on your device. No ads, no trackers, no account required."
+  },
+  "terms": {
+    "title": "Terms & Conditions",
+    "body": "Use the app responsibly. The software is provided as-is without warranties."
+  },
+  "licenses": {
+    "title": "Open Source Licenses",
+    "body": "This app is built with Expo, React Native, React Navigation, Zustand, i18next, and other open source libraries."
+  },
+  "difficulty": {
+    "beginner": "Beginner",
+    "intermediate": "Intermediate",
+    "hard": "Hard",
+    "expert": "Expert"
+  },
+  "status": {
+    "active": "Active",
+    "completed": "Completed",
+    "abandoned": "Abandoned",
+    "lost": "Lost"
+  },
+  "themes": {
+    "system": "System",
+    "light": "Light",
+    "dark": "Dark"
+  }
+}
+

@@ -1,7 +1,7 @@
 import { StyleSheet, Switch, View } from 'react-native';
 
 import { AppText } from './AppText';
-import { useAppTheme } from '../../app/providers/ThemeProvider';
+import { useAppTheme } from '../../core/providers/ThemeProvider';
 
 export const ToggleRow = ({
   label,

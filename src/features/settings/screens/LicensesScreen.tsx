@@ -19,7 +19,7 @@ const licenses = [
 export const LicensesScreen = () => {
   const { t } = useTranslation();
   return (
-    <Screen scroll>
+    <Screen>
       <AppText variant="title">{t('licenses.title')}</AppText>
       <Card style={styles.card}>
         <AppText>{t('licenses.body')}</AppText>

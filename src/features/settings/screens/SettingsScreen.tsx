@@ -3,8 +3,8 @@ import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, TextInput, View } from 'react-native';
 
-import { useSnackbar } from '../../../app/providers/SnackbarProvider';
-import { useAppTheme } from '../../../app/providers/ThemeProvider';
+import { useSnackbar } from '../../../core/providers/SnackbarProvider';
+import { useAppTheme } from '../../../core/providers/ThemeProvider';
 import { Screen } from '../../../components/layout/Screen';
 import { AppText } from '../../../components/ui/AppText';
 import { Button } from '../../../components/ui/Button';

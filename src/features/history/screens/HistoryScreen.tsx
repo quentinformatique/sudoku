@@ -21,20 +21,21 @@ const difficultyOptions: { labelKey: string; value: Difficulty | 'all' }[] = [
 
 const statusOptions: {
   labelKey: string;
-  value: 'all' | 'active' | 'completed' | 'abandoned';
+  value: 'all' | 'active' | 'completed' | 'abandoned' | 'lost';
 }[] = [
   { labelKey: 'common.all', value: 'all' },
   { labelKey: 'status.active', value: 'active' },
   { labelKey: 'status.completed', value: 'completed' },
   { labelKey: 'status.abandoned', value: 'abandoned' },
+  { labelKey: 'status.lost', value: 'lost' },
 ];
 
 export const HistoryScreen = () => {
   const { t } = useTranslation();
   const [difficulty, setDifficulty] = useState<Difficulty | 'all'>('all');
-  const [status, setStatus] = useState<'all' | 'active' | 'completed' | 'abandoned'>(
-    'all',
-  );
+  const [status, setStatus] = useState<
+    'all' | 'active' | 'completed' | 'abandoned' | 'lost'
+  >('all');
   const [games, setGames] = useState<any[]>([]);
 
   const difficultyLabels = useMemo(
@@ -69,7 +70,7 @@ export const HistoryScreen = () => {
   );
 
   return (
-    <Screen scroll>
+    <Screen>
       <AppText variant="title">{t('history.title')}</AppText>
       <Card style={styles.card}>
         <AppText variant="label">{t('history.filterDifficulty')}</AppText>

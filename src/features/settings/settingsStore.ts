@@ -2,7 +2,7 @@ import { create } from 'zustand';
 
 import { accentPalette } from './constants';
 import { SettingsState, ThemePreference } from './types';
-import i18n from '../../app/i18n';
+import i18n from '../../core/i18n';
 import { loadSettings, saveSettings } from '../../data/repositories/settingsRepository';
 
 const defaultSettings: SettingsState = {

@@ -1,12 +1,12 @@
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Pressable } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { useAppTheme } from '../../app/providers/ThemeProvider';
+import { useAppTheme } from '../../core/providers/ThemeProvider';
 import { Screen } from '../../components/layout/Screen';
 import { AppText } from '../../components/ui/AppText';
-import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
 import { getStats, listGames } from '../../data/repositories/gameRepository';
 import { formatDuration, formatDate } from '../../utils/time';
@@ -17,6 +17,7 @@ export const HomeScreen = () => {
   const { t } = useTranslation();
   const navigation = useNavigation<any>();
   const record = useGameStore((state) => state.record);
+  const activeRecord = record?.status === 'active' ? record : null;
   const [stats, setStats] = useState<{ total: number; completed: number } | null>(null);
   const [recent, setRecent] = useState<any[]>([]);
 
@@ -36,108 +37,185 @@ export const HomeScreen = () => {
   );
 
   return (
-    <Screen scroll>
-      <AppText variant="title">{t('home.title')}</AppText>
-      <AppText style={{ color: theme.colors.muted }}>{t('home.subtitle')}</AppText>
-
-      <Card style={styles.card}>
-        <AppText variant="label" style={{ color: theme.colors.muted }}>
+    <Screen 
+      title={t('home.title')} 
+      subtitle={t('home.subtitle')}
+      scroll
+    >
+      <View style={styles.maxWidthWrapper}>
+        <AppText variant="label" style={styles.sectionTitle}>
           {t('home.activeTitle')}
         </AppText>
-        {record ? (
-          <View style={styles.row}>
-            <View>
-              <AppText variant="subtitle">{t(`difficulty.${record.difficulty}`)}</AppText>
-              <AppText style={{ color: theme.colors.muted }}>
-                {formatDuration(record.durationSec)}
-              </AppText>
-            </View>
-            <Button
-              label={t('home.resume')}
+        
+        <Card style={styles.card}>
+          {activeRecord ? (
+            <Pressable 
               onPress={() => navigation.navigate('PlayTab', { screen: 'Continue' })}
-            />
-          </View>
-        ) : (
-          <View style={styles.row}>
-            <AppText style={{ color: theme.colors.muted }}>
-              {t('home.activeEmpty')}
-            </AppText>
-            <Button
-              label={t('home.startNew')}
+              style={styles.activeRow}
+            >
+              <View style={styles.activeInfo}>
+                <AppText variant="subtitle" style={{ fontSize: 18 }}>
+                  {t(`difficulty.${activeRecord.difficulty}`)}
+                </AppText>
+                <AppText style={{ color: theme.colors.muted, marginTop: 4 }}>
+                  {formatDuration(activeRecord.durationSec)}
+                </AppText>
+                <View style={styles.progressContainer}>
+                  <View style={[styles.progressBar, { backgroundColor: theme.colors.border }]}>
+                    <View 
+                      style={[
+                        styles.progressFill, 
+                        { backgroundColor: theme.colors.accent, width: `${Math.min(100, (activeRecord.moves / 81) * 100)}%` }
+                      ]} 
+                    />
+                  </View>
+                  <AppText style={styles.progressText}>
+                    {Math.round((activeRecord.moves / 81) * 100)}%
+                  </AppText>
+                </View>
+              </View>
+              <MaterialCommunityIcons name="chevron-right" size={24} color={theme.colors.muted} />
+            </Pressable>
+          ) : (
+            <Pressable 
               onPress={() => navigation.navigate('PlayTab', { screen: 'NewGame' })}
-            />
-          </View>
-        )}
-      </Card>
+              style={styles.emptyActive}
+            >
+              <AppText style={{ color: theme.colors.muted }}>{t('home.activeEmpty')}</AppText>
+              <AppText variant="subtitle" style={{ color: theme.colors.accent, marginTop: 4 }}>
+                {t('home.startNew')}
+              </AppText>
+            </Pressable>
+          )}
+        </Card>
 
-      <Card style={styles.card}>
-        <AppText variant="label" style={{ color: theme.colors.muted }}>
+        <AppText variant="label" style={[styles.sectionTitle, { marginTop: 24 }]}>
           {t('home.quickStats')}
         </AppText>
         <View style={styles.statsRow}>
-          <View>
-            <AppText variant="subtitle">{stats?.completed ?? 0}</AppText>
-            <AppText style={{ color: theme.colors.muted }}>{t('home.completed')}</AppText>
-          </View>
-          <View>
-            <AppText variant="subtitle">{stats?.total ?? 0}</AppText>
-            <AppText style={{ color: theme.colors.muted }}>{t('home.total')}</AppText>
-          </View>
+          <Card style={styles.statCard}>
+            <AppText variant="title" style={{ fontSize: 24 }}>{stats?.completed ?? 0}</AppText>
+            <AppText variant="label" style={{ color: theme.colors.muted }}>{t('home.completed')}</AppText>
+          </Card>
+          <Card style={styles.statCard}>
+            <AppText variant="title" style={{ fontSize: 24 }}>{stats?.total ?? 0}</AppText>
+            <AppText variant="label" style={{ color: theme.colors.muted }}>{t('home.total')}</AppText>
+          </Card>
         </View>
-      </Card>
 
-      <Card style={styles.card}>
-        <AppText variant="label" style={{ color: theme.colors.muted }}>
+        <AppText variant="label" style={[styles.sectionTitle, { marginTop: 24 }]}>
           {t('home.recentHistory')}
         </AppText>
-        {recent.length === 0 ? (
-          <AppText style={{ color: theme.colors.muted }}>{t('history.empty')}</AppText>
-        ) : (
-          recent.map((game) => (
-            <View
-              key={game.id}
-              style={[styles.historyRow, { borderBottomColor: theme.colors.border }]}
-            >
-              <View>
-                <AppText variant="subtitle" style={{ fontSize: 16 }}>
-                  {t(`difficulty.${game.difficulty}`)}
-                </AppText>
-                <AppText style={{ color: theme.colors.muted }}>
-                  {formatDate(game.updatedAt)} ·{' '}
-                  {formatDuration(Number(game.durationSec ?? 0))}
-                </AppText>
-              </View>
-              <AppText variant="label" style={{ color: theme.colors.muted }}>
-                {t(`status.${game.status}`)}
-              </AppText>
+        <Card style={[styles.card, { padding: 0 }]}>
+          {recent.length === 0 ? (
+            <View style={{ padding: 16 }}>
+              <AppText style={{ color: theme.colors.muted }}>{t('history.empty')}</AppText>
             </View>
-          ))
-        )}
-      </Card>
+          ) : (
+            recent.map((game, index) => (
+              <View
+                key={game.id}
+                style={[
+                  styles.historyRow, 
+                  { borderBottomColor: theme.colors.border },
+                  index === recent.length - 1 && { borderBottomWidth: 0 }
+                ]}
+              >
+                <View>
+                  <AppText variant="subtitle" style={{ fontSize: 16 }}>
+                    {t(`difficulty.${game.difficulty}`)}
+                  </AppText>
+                  <AppText style={{ color: theme.colors.muted, fontSize: 13, marginTop: 2 }}>
+                    {formatDate(game.updatedAt)} · {formatDuration(Number(game.durationSec ?? 0))}
+                  </AppText>
+                </View>
+                <View style={[
+                  styles.statusBadge, 
+                  { backgroundColor: theme.colors.border }
+                ]}>
+                  <AppText style={{ fontSize: 10, color: theme.colors.muted }}>
+                    {t(`status.${game.status}`).toUpperCase()}
+                  </AppText>
+                </View>
+              </View>
+            ))
+          )}
+        </Card>
+      </View>
     </Screen>
   );
 };
 
 const styles = StyleSheet.create({
-  card: {
-    marginTop: 16,
+  maxWidthWrapper: {
+    maxWidth: 600,
+    width: '100%',
+    alignSelf: 'center',
   },
-  row: {
+  sectionTitle: {
+    color: '#888',
+    marginBottom: 8,
+    fontSize: 12,
+    letterSpacing: 1,
+    textTransform: 'uppercase',
+  },
+  card: {
+    padding: 16,
+    borderRadius: 16,
+  },
+  activeRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    gap: 16,
+  },
+  activeInfo: {
+    flex: 1,
+  },
+  emptyActive: {
+    alignItems: 'center',
+    paddingVertical: 8,
+  },
+  progressContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
     marginTop: 12,
+  },
+  progressBar: {
+    flex: 1,
+    height: 4,
+    borderRadius: 2,
+    overflow: 'hidden',
+  },
+  progressFill: {
+    height: '100%',
+    borderRadius: 2,
+  },
+  progressText: {
+    fontSize: 11,
+    width: 28,
+    textAlign: 'right',
   },
   statsRow: {
     flexDirection: 'row',
-    gap: 32,
-    marginTop: 12,
+    gap: 12,
+  },
+  statCard: {
+    flex: 1,
+    padding: 16,
+    alignItems: 'center',
+    gap: 4,
   },
   historyRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: 10,
+    padding: 16,
     borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  statusBadge: {
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 6,
   },
 });

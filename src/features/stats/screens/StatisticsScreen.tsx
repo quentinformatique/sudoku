@@ -35,7 +35,7 @@ export const StatisticsScreen = () => {
   const totalCompleted = stats.reduce((acc, row) => acc + Number(row.completed ?? 0), 0);
 
   return (
-    <Screen scroll>
+    <Screen>
       <AppText variant="title">{t('stats.title')}</AppText>
       <Card style={styles.card}>
         <AppText variant="label">{t('stats.overall')}</AppText>

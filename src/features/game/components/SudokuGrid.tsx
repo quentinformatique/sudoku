@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
-import { useAppTheme } from '../../../app/providers/ThemeProvider';
+import { useAppTheme } from '../../../core/providers/ThemeProvider';
 import { AppText } from '../../../components/ui/AppText';
 import { getCol, getRow } from '../engine/grid';
 
@@ -22,6 +22,7 @@ export const SudokuGrid = memo(
     showErrors,
     largeNumbers,
     size,
+    isPaused,
   }: {
     grid: number[];
     notes: number[][];
@@ -32,12 +33,39 @@ export const SudokuGrid = memo(
     showErrors: boolean;
     largeNumbers: boolean;
     size?: number;
+    isPaused?: boolean;
   }) => {
     const theme = useAppTheme();
     const selectedValue = selectedIndex !== null ? (grid[selectedIndex] ?? 0) : 0;
     const selectedRow = selectedIndex !== null ? getRow(selectedIndex) : -1;
     const selectedCol = selectedIndex !== null ? getCol(selectedIndex) : -1;
     const selectedBox = selectedIndex !== null ? indexToBox(selectedIndex) : -1;
+
+    if (!grid || grid.length !== 81 || !notes || notes.length !== 81) {
+      return null;
+    }
+
+    // Pro Noir highlights
+    const relatedBg = theme.mode === 'dark' ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.035)';
+    const sameNumberBg = theme.mode === 'dark' ? 'rgba(255, 255, 255, 0.12)' : 'rgba(0, 0, 0, 0.08)';
+    const selectedBg = theme.colors.accentSoft;
+
+    if (isPaused) {
+      return (
+        <View
+          style={[
+            styles.grid,
+            { borderColor: theme.colors.border, backgroundColor: theme.colors.surface },
+            size ? { width: size, height: size } : null,
+            styles.pausedContainer,
+          ]}
+        >
+          <AppText variant="subtitle" style={{ color: theme.colors.muted }}>
+            Paused
+          </AppText>
+        </View>
+      );
+    }
 
     return (
       <View
@@ -52,66 +80,70 @@ export const SudokuGrid = memo(
           const col = getCol(index);
           const box = indexToBox(index);
           const isSelected = index === selectedIndex;
-          const isRelated =
+          
+          const isRelatedToSelection =
             selectedIndex !== null &&
             (row === selectedRow || col === selectedCol || box === selectedBox);
+          
           const isSameNumber = selectedValue !== 0 && value === selectedValue;
           const isFixed = puzzle[index] !== 0;
-          const cellNotes = notes[index] ?? [];
-          const solutionValue = solution[index] ?? 0;
-          const isError = showErrors && value !== 0 && value !== solutionValue;
+          const cellNotes = (notes && notes[index]) || [];
+          const isError = showErrors && value !== 0 && value !== (solution[index] ?? 0);
           const showNotes = value === 0 && cellNotes.length > 0;
+
+          let backgroundColor = 'transparent';
+          if (isRelatedToSelection) backgroundColor = relatedBg;
+          if (isSameNumber) backgroundColor = sameNumberBg;
+          if (isSelected) backgroundColor = selectedBg;
 
           return (
             <Pressable
               key={index}
-              onPress={() => {
-                onSelect(index);
-              }}
+              onPress={() => onSelect(index)}
               style={[
                 styles.cell,
                 {
-                  backgroundColor: isSelected
-                    ? theme.colors.accentSoft
-                    : isRelated
-                      ? `${theme.colors.border}55`
-                      : 'transparent',
+                  backgroundColor,
                   borderColor: theme.colors.border,
-                  borderRightWidth: (col + 1) % 3 === 0 && col !== 8 ? 2 : 1,
-                  borderBottomWidth: (row + 1) % 3 === 0 && row !== 8 ? 2 : 1,
+                  borderRightWidth: (col + 1) % 3 === 0 && col !== 8 ? 2 : 0.5,
+                  borderBottomWidth: (row + 1) % 3 === 0 && row !== 8 ? 2 : 0.5,
                 },
               ]}
             >
               {showNotes ? (
                 <View style={styles.notes}>
-                  {Array.from({ length: 9 }, (_, noteIndex) => {
-                    const noteValue = noteIndex + 1;
-                    const active = cellNotes.includes(noteValue);
+                  {Array.from({ length: 9 }, (_, nIdx) => {
+                    const nVal = nIdx + 1;
+                    const hasNote = cellNotes.includes(nVal);
+                    const isNoteHighlighted = selectedValue !== 0 && nVal === selectedValue;
                     return (
-                      <AppText
-                        key={noteValue}
-                        style={{
-                          fontSize: largeNumbers ? 12 : 10,
-                          color: active ? theme.colors.muted : 'transparent',
-                        }}
-                      >
-                        {noteValue}
-                      </AppText>
+                      <View key={nVal} style={styles.noteCell}>
+                        {hasNote && (
+                          <AppText
+                            style={{
+                              fontSize: largeNumbers ? 11 : 9,
+                              color: isNoteHighlighted ? theme.colors.accent : theme.colors.muted,
+                              fontFamily: isNoteHighlighted 
+                                ? theme.typography.fontFamily.semibold 
+                                : theme.typography.fontFamily.regular,
+                            }}
+                          >
+                            {nVal}
+                          </AppText>
+                        )}
+                      </View>
                     );
                   })}
                 </View>
               ) : (
                 <AppText
-                  variant="subtitle"
                   style={{
-                    fontSize: largeNumbers ? 28 : 22,
+                    fontSize: largeNumbers ? 26 : 22,
                     color: isError
                       ? theme.colors.danger
                       : isFixed
                         ? theme.colors.text
-                        : isSameNumber
-                          ? theme.colors.accent
-                          : theme.colors.text,
+                        : theme.colors.accent,
                     fontFamily: isFixed
                       ? theme.typography.fontFamily.semibold
                       : theme.typography.fontFamily.medium,
@@ -119,6 +151,14 @@ export const SudokuGrid = memo(
                 >
                   {value !== 0 ? value : ''}
                 </AppText>
+              )}
+              {isSelected && (
+                <View 
+                  style={[
+                    styles.selectionIndicator, 
+                    { backgroundColor: theme.colors.accent }
+                  ]} 
+                />
               )}
             </Pressable>
           );
@@ -130,27 +170,43 @@ export const SudokuGrid = memo(
 
 const styles = StyleSheet.create({
   grid: {
-    borderWidth: 2,
-    borderRadius: 18,
+    borderWidth: 2.5,
+    borderRadius: 12,
     overflow: 'hidden',
     aspectRatio: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
+  pausedContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   cell: {
     width: `${100 / 9}%`,
     height: `${100 / 9}%`,
-    borderWidth: 1,
+    borderWidth: 0.25,
     alignItems: 'center',
     justifyContent: 'center',
+    position: 'relative',
   },
   notes: {
     width: '100%',
     height: '100%',
     flexDirection: 'row',
     flexWrap: 'wrap',
+    padding: 2,
+  },
+  noteCell: {
+    width: '33.333%',
+    height: '33.333%',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 1,
+  },
+  selectionIndicator: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 2.5,
   },
 });

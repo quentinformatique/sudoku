@@ -34,130 +34,42 @@ const StatsStack = createNativeStackNavigator<StatsStackParamList>();
 const SettingsStack = createNativeStackNavigator<SettingsStackParamList>();
 
 const HomeStackNavigator = () => {
-  const { t } = useTranslation();
-  const theme = useAppTheme();
   return (
-    <HomeStack.Navigator
-      screenOptions={{
-        headerStyle: { backgroundColor: theme.colors.card },
-        headerTintColor: theme.colors.text,
-        headerTitleStyle: { fontFamily: theme.typography.fontFamily.medium },
-        headerShadowVisible: false,
-      }}
-    >
-      <HomeStack.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{ title: t('tabs.home') }}
-      />
+    <HomeStack.Navigator screenOptions={{ headerShown: false }}>
+      <HomeStack.Screen name="Home" component={HomeScreen} />
     </HomeStack.Navigator>
   );
 };
 
 const PlayStackNavigator = () => {
-  const { t } = useTranslation();
-  const theme = useAppTheme();
   return (
-    <PlayStack.Navigator
-      screenOptions={{
-        headerStyle: { backgroundColor: theme.colors.card },
-        headerTintColor: theme.colors.text,
-        headerTitleStyle: { fontFamily: theme.typography.fontFamily.medium },
-        headerShadowVisible: false,
-      }}
-    >
-      <PlayStack.Screen
-        name="NewGame"
-        component={NewGameScreen}
-        options={{ title: t('play.newGame') }}
-      />
-      <PlayStack.Screen
-        name="Continue"
-        component={ContinueScreen}
-        options={{ title: t('play.continue') }}
-      />
-      <PlayStack.Screen
-        name="Game"
-        component={GameScreen}
-        options={{ title: t('game.title') }}
-      />
+    <PlayStack.Navigator screenOptions={{ headerShown: false }}>
+      <PlayStack.Screen name="NewGame" component={NewGameScreen} />
+      <PlayStack.Screen name="Continue" component={ContinueScreen} />
+      <PlayStack.Screen name="Game" component={GameScreen} />
     </PlayStack.Navigator>
   );
 };
 
 const StatsStackNavigator = () => {
-  const { t } = useTranslation();
-  const theme = useAppTheme();
   return (
-    <StatsStack.Navigator
-      screenOptions={{
-        headerStyle: { backgroundColor: theme.colors.card },
-        headerTintColor: theme.colors.text,
-        headerTitleStyle: { fontFamily: theme.typography.fontFamily.medium },
-        headerShadowVisible: false,
-      }}
-    >
-      <StatsStack.Screen
-        name="Statistics"
-        component={StatisticsScreen}
-        options={{ title: t('stats.title') }}
-      />
-      <StatsStack.Screen
-        name="History"
-        component={HistoryScreen}
-        options={{ title: t('history.title') }}
-      />
+    <StatsStack.Navigator screenOptions={{ headerShown: false }}>
+      <StatsStack.Screen name="Statistics" component={StatisticsScreen} />
+      <StatsStack.Screen name="History" component={HistoryScreen} />
     </StatsStack.Navigator>
   );
 };
 
 const SettingsStackNavigator = () => {
-  const { t } = useTranslation();
-  const theme = useAppTheme();
   return (
-    <SettingsStack.Navigator
-      screenOptions={{
-        headerStyle: { backgroundColor: theme.colors.card },
-        headerTintColor: theme.colors.text,
-        headerTitleStyle: { fontFamily: theme.typography.fontFamily.medium },
-        headerShadowVisible: false,
-      }}
-    >
-      <SettingsStack.Screen
-        name="Settings"
-        component={SettingsScreen}
-        options={{ title: t('settings.title') }}
-      />
-      <SettingsStack.Screen
-        name="About"
-        component={AboutScreen}
-        options={{ title: t('about.title') }}
-      />
-      <SettingsStack.Screen
-        name="Help"
-        component={HelpScreen}
-        options={{ title: t('help.title') }}
-      />
-      <SettingsStack.Screen
-        name="Learning"
-        component={LearningScreen}
-        options={{ title: t('learning.title') }}
-      />
-      <SettingsStack.Screen
-        name="Privacy"
-        component={PrivacyScreen}
-        options={{ title: t('privacy.title') }}
-      />
-      <SettingsStack.Screen
-        name="Terms"
-        component={TermsScreen}
-        options={{ title: t('terms.title') }}
-      />
-      <SettingsStack.Screen
-        name="Licenses"
-        component={LicensesScreen}
-        options={{ title: t('licenses.title') }}
-      />
+    <SettingsStack.Navigator screenOptions={{ headerShown: false }}>
+      <SettingsStack.Screen name="Settings" component={SettingsScreen} />
+      <SettingsStack.Screen name="About" component={AboutScreen} />
+      <SettingsStack.Screen name="Help" component={HelpScreen} />
+      <SettingsStack.Screen name="Learning" component={LearningScreen} />
+      <SettingsStack.Screen name="Privacy" component={PrivacyScreen} />
+      <SettingsStack.Screen name="Terms" component={TermsScreen} />
+      <SettingsStack.Screen name="Licenses" component={LicensesScreen} />
     </SettingsStack.Navigator>
   );
 };

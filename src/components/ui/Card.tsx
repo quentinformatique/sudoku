@@ -1,6 +1,6 @@
 import { View, ViewProps, StyleSheet } from 'react-native';
 
-import { useAppTheme } from '../../app/providers/ThemeProvider';
+import { useAppTheme } from '../../core/providers/ThemeProvider';
 
 export const Card = ({ style, ...props }: ViewProps) => {
   const theme = useAppTheme();
